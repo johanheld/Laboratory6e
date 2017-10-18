@@ -8,12 +8,11 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.os.AsyncTask;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.widget.TextView;
 
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by johan on 2017-10-17.
@@ -26,6 +25,7 @@ public class ColorTextView extends android.support.v7.widget.AppCompatTextView
     public ColorTextView(Context context)
     {
         super(context);
+
     }
 
     public ColorTextView(Context context, AttributeSet attrs)
@@ -49,15 +49,24 @@ public class ColorTextView extends android.support.v7.widget.AppCompatTextView
 
         public void run()
         {
-            int n = 0;
-            while (n < 20)
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask()
+            {
+                @Override
+                public void run()
+                {
+                    update();
+                }
+            }, 0, 1000);
+
+            while (true)
             {
                 int r = rand.nextInt();
                 int g = rand.nextInt();
                 int b = rand.nextInt();
                 int color = Color.argb(255, r, g, b);
                 setColor(color);
-                update();
+
                 try
                 {
                     Thread.sleep(150);
@@ -65,7 +74,6 @@ public class ColorTextView extends android.support.v7.widget.AppCompatTextView
                 {
                     e.printStackTrace();
                 }
-                n++;
             }
         }
     }
@@ -84,12 +92,9 @@ public class ColorTextView extends android.support.v7.widget.AppCompatTextView
     @Override
     protected void onDraw(Canvas canvas)
     {
-
         Paint paint = new Paint();
         paint.setColor(color);
         canvas.drawPaint(paint);
         super.onDraw(canvas);
     }
-
-    //test
 }
