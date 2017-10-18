@@ -90,4 +90,6 @@ public class ColorTextView extends android.support.v7.widget.AppCompatTextView
         canvas.drawPaint(paint);
         super.onDraw(canvas);
     }
+
+    //test
 }
